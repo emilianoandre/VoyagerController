@@ -20,24 +20,27 @@ public class DomainUser implements Serializable{
 	private String email;
 	private String password;
 	private DomainUserType userType;
+	private String token;
 
 	public DomainUser() {
 	}
 
-	public DomainUser(int idUser, String userName, String name, String email, String password, DomainUserType userType) {
+	public DomainUser(int idUser, String userName, String name, String email, String password, String token, DomainUserType userType) {
 		this.idUser = idUser;
 		this.userName = userName;
 		this.name = name;
 		this.email = email;
 		this.password = password;
+		this.token = token;
 		this.userType = userType;
 	}
 	
-	public DomainUser(String userName, String name, String email, String password, DomainUserType userType) {
+	public DomainUser(String userName, String name, String email, String password, String token, DomainUserType userType) {
 		this.userName = userName;
 		this.name = name;
 		this.email = email;
 		this.password = password;
+		this.token = token;
 		this.userType = userType;
 	}
 	
@@ -45,13 +48,17 @@ public class DomainUser implements Serializable{
 	 * Creates a DomainUser from a model user
 	 * 
 	 * @param user
+	 * @param boolean. If true the password will be saved
 	 */
-	public DomainUser(User user) {
+	public DomainUser(User user, Boolean setPassword) {
 		this.idUser = user.getIdUser();
 		this.userName = user.getUserName();
 		this.name = user.getName();
 		this.email = user.getEmail();
-		this.password = user.getPassword();
+		this.token = user.getToken();
+		if (setPassword) {
+			this.password = user.getPassword();
+		}
 		
 		DomainUserType userType = new DomainUserType(user.getUserType().getIdUserType(), user.getUserType().getName());
 		this.userType = userType;
@@ -142,6 +149,22 @@ public class DomainUser implements Serializable{
 	}
 	
 	/**
+	 * 
+	 * @return the user token for this session
+	 */
+	public String getToken() {
+		return token;
+	}
+	
+	/**
+	 * 
+	 * @param token to use in this session
+	 */
+	public void setToken(String token) {
+		this.token = token;
+	}
+	
+	/**
 	 * Creates a User from a DomainUser
 	 * 
 	 * @param DomainUser domainUser with values to update
@@ -162,5 +185,7 @@ public class DomainUser implements Serializable{
 		
 		return user;
 	}
+	
+
 	
 }

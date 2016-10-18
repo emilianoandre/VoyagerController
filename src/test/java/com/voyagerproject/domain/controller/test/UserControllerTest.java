@@ -61,7 +61,7 @@ public class UserControllerTest {
     public void updateUserTest()
     {
     	try{
-    		DomainUser domainUser = new DomainUser("TestUserNameNonDelete", "Name", "email", "testPassword1", new DomainUserType(1, ""));
+    		DomainUser domainUser = new DomainUser("TestUserNameNonDelete", "Name", "email", "testPassword1", "", new DomainUserType(1, ""));
     		userController.updateUser(domainUser);
     	} catch (Exception ex) {
     		log.debug("updateUserTest: Exception " + ex.getMessage());

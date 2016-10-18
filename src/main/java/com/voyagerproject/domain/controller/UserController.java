@@ -79,7 +79,7 @@ public class UserController implements IVoyagerDomainController{
 		DomainUser loggedUser = null;
 		try {
 			// Log in user
-			loggedUser = new DomainUser(userDao.logIn(userName, hashedPassword));
+			loggedUser = new DomainUser(userDao.logIn(userName, hashedPassword), false);
 		} catch (Exception ex) {
 			log.error("Failed to log in user: " + userName, ex);
 			throw new DomainResultNotFoundException(ex.getMessage());
@@ -100,7 +100,7 @@ public class UserController implements IVoyagerDomainController{
 		DomainUser loggedUser = null;
 		try {
 			// Log in user
-			loggedUser = new DomainUser(userDao.logOut(userName, hashedPassword));
+			loggedUser = new DomainUser(userDao.logOut(userName, hashedPassword), false);
 		} catch (Exception ex) {
 			log.error("Failed to log out user: " + userName, ex);
 			throw new DomainResultNotFoundException(ex.getMessage());
