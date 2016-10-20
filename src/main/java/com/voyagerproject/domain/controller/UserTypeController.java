@@ -1,6 +1,5 @@
 package com.voyagerproject.domain.controller;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import org.apache.commons.logging.Log;
@@ -9,7 +8,6 @@ import org.apache.commons.logging.LogFactory;
 import com.voyagerproject.dao.UserTypeDAO;
 import com.voyagerproject.domain.controller.interfaces.IVoyagerDomainController;
 import com.voyagerproject.domain.entities.DomainUserType;
-import com.voyagerproject.model.UserType;
 
 /**
  * Controller that handles all the requests for User Type
@@ -23,9 +21,22 @@ public class UserTypeController implements IVoyagerDomainController {
 	
 	private static final Log log = LogFactory.getLog(UserTypeController.class);
 	
-	public Collection<UserType> getUserTypes() {
-		Collection<UserType> userTypes;
-		userTypes = userTypeDao.getList();
+	/**
+	 * Gets the complete list of user types
+	 * 
+	 * @return UserType collection
+	 * @throws Exception 
+	 */
+	public Collection<DomainUserType> getUserTypes() throws Exception {
+		Collection<DomainUserType> userTypes;
+		
+		try {
+			userTypes = DomainUserType.getDomainUserTypeList(userTypeDao.getList());
+		} catch (Exception ex) {
+			log.error("Failed to fetch user type list");
+			throw ex;
+		}
+		
 		return userTypes;
 	}
 

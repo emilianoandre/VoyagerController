@@ -102,7 +102,7 @@ public class UserControllerTest {
     @Test
     public void logInTest() {
     	try {
-			userController.logIn("TestUserNameNonDelete", "testPassword");
+			userController.logIn("TestUserNameNonDelete", "testPassword1");
 		} catch (DomainResultNotFoundException e) {
 			assertTrue(false);
 		}

@@ -1,5 +1,10 @@
 package com.voyagerproject.domain.entities;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
+import com.voyagerproject.model.UserType;
+
 /**
  * Domain UserType class
  * 
@@ -20,6 +25,16 @@ public class DomainUserType {
 	
 	public DomainUserType(String name) {
 		this.setName(name);
+	}
+	
+	/**
+	 * Creates a DomainUserType from a Model UserType
+	 * 
+	 * @param userType
+	 */
+	public DomainUserType(UserType userType) {
+		this.setName(userType.getName());
+		this.setIdUserType(userType.getIdUserType());
 	}
 
 	/**
@@ -48,6 +63,23 @@ public class DomainUserType {
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	/**
+	 * Creates a list of DomainUserTypes from a list of UserTypes
+	 * 
+	 * @param userTypeList
+	 * @return
+	 */
+	public static Collection<DomainUserType> getDomainUserTypeList(Collection<UserType> userTypeList) {
+		Collection<DomainUserType> userTypes = new ArrayList<DomainUserType>();
+		
+		// Create a DomainUserType from each entry in the userTypeList 
+		for (UserType userType : userTypeList) {
+			userTypes.add(new DomainUserType(userType));			
+		}
+		
+		return userTypes;
 	}
 
 }
