@@ -41,8 +41,8 @@ public class UserController implements IVoyagerDomainController{
 		userType.setIdUserType(userTypeId);
 		User user = new User(userName, name, email, DomainUtil.calculateHash(password), userType, null, createdBy);
 		try {
-			userDao.persist(user);
-			user.setIdUser(userDao.findIdByUserName(userName));
+			Integer userId = userDao.persist(user);
+			user.setIdUser(userId);
 		} catch (Exception ex) {
 			log.error("Failed to create user with userName: " + userName, ex);			
 			return null;

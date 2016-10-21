@@ -8,6 +8,8 @@ import org.apache.commons.logging.LogFactory;
 import com.voyagerproject.dao.UserTypeDAO;
 import com.voyagerproject.domain.controller.interfaces.IVoyagerDomainController;
 import com.voyagerproject.domain.entities.DomainUserType;
+import com.voyagerproject.exceptions.ResultNotFoundException;
+import com.voyagerproject.model.UserType;
 
 /**
  * Controller that handles all the requests for User Type
@@ -38,6 +40,78 @@ public class UserTypeController implements IVoyagerDomainController {
 		}
 		
 		return userTypes;
+	}
+	
+	/**
+	 * Creates a user type in the system
+	 * 
+	 * @param name the name of the user type
+	 * @return createdUserType
+	 * @throws Exception 
+	 */
+	public DomainUserType createUserType(String name) throws Exception {
+
+		// Create User
+		UserType userType = new UserType();
+		userType.setName(name);
+		try {
+			Integer userTypeId = userTypeDao.persist(userType);
+			userType.setIdUserType(userTypeId);
+		} catch (Exception ex) {
+			log.error("Failed to create user type with name: " + name, ex);
+			throw ex;
+		}	
+		
+		// Create object to return
+		DomainUserType domainUserType = new DomainUserType(userType);
+		
+		return domainUserType;
+	}
+	
+	/**
+	 * Deletes a user type by it's id
+	 * 
+	 * @param userTypeId
+	 * @throws Exception 
+	 */
+	public void deleteUserType(Integer userTypeId) throws Exception {		
+		try {
+			UserType userType = userTypeDao.findById(userTypeId);
+			userTypeDao.remove(userType);
+		} catch (ResultNotFoundException rnfe) {
+			log.info("No user type found with id: " + userTypeId);
+			throw rnfe;
+		} catch (Exception ex) {
+			log.error("Failed to delete user type with ID: " + userTypeId, ex);			
+			throw ex;
+		}
+	}
+	
+	/**
+	 * Updates a user type
+	 * 
+	 * @param userType to update
+	 * @return updatedUserType
+	 * @throws Exception 
+	 */
+	public void updateUserType(DomainUserType updatedUserType) throws Exception {
+		try {
+			UserType userType;
+			try {
+				// First we look for the user type by the userName
+				userType = userTypeDao.findById(updatedUserType.getIdUserType());
+			} catch (ResultNotFoundException rnfe) {
+				log.info("No user type found with id: " + updatedUserType.getIdUserType());
+				throw rnfe;
+			}
+			
+			// Update the entry values and merge
+			userType.setName(updatedUserType.getName());
+			userTypeDao.merge(userType);
+		} catch (Exception ex) {
+			log.error("Failed to update user with id: " + updatedUserType.getIdUserType(), ex);			
+			throw ex;
+		}
 	}
 
 }
