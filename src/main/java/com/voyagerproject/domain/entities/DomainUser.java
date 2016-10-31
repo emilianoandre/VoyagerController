@@ -1,6 +1,8 @@
 package com.voyagerproject.domain.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import com.voyagerproject.model.User;
 
@@ -186,6 +188,20 @@ public class DomainUser implements Serializable{
 		return user;
 	}
 	
-
-	
+	/**
+	 * Creates a list of DomainUsers from a list of Users
+	 * 
+	 * @param userList
+	 * @return
+	 */
+	public static Collection<DomainUser> getDomainUserList(Collection<User> userList) {
+		Collection<DomainUser> users = new ArrayList<DomainUser>();
+		
+		// Create a DomainUser from each entry in the userList 
+		for (User user : userList) {
+			users.add(new DomainUser(user, true));			
+		}
+		
+		return users;
+	}
 }

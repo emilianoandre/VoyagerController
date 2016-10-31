@@ -1,5 +1,7 @@
 package com.voyagerproject.domain.controller;
 
+import java.util.Collection;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -24,6 +26,25 @@ public class UserController implements IVoyagerDomainController{
 	private static final Log log = LogFactory.getLog(UserController.class);
 	
 	/**
+	 * Gets the complete list of users
+	 * 
+	 * @return Users collection
+	 * @throws Exception 
+	 */
+	public Collection<DomainUser> getUsers() throws Exception {
+		Collection<DomainUser> userTypes;
+		
+		try {
+			userTypes = DomainUser.getDomainUserList(userDao.getList());
+		} catch (Exception ex) {
+			log.error("Failed to fetch user list");
+			throw ex;
+		}
+		
+		return userTypes;
+	}
+	
+	/**
 	 * Creates a user in the system
 	 * 
 	 * @param userName
@@ -34,12 +55,12 @@ public class UserController implements IVoyagerDomainController{
 	 * @param createdBy
 	 * @return createdUser
 	 */
-	public User createUser(String userName, String name, String email, String password, int userTypeId, String createdBy) {
+	public DomainUser createUser(String userName, String name, String email, String password, int userTypeId) {
 
 		// Create User
 		UserType userType = new UserType();
 		userType.setIdUserType(userTypeId);
-		User user = new User(userName, name, email, DomainUtil.calculateHash(password), userType, null, createdBy);
+		User user = new User(userName, name, email, DomainUtil.calculateHash(password), userType, null);
 		try {
 			Integer userId = userDao.persist(user);
 			user.setIdUser(userId);
@@ -48,7 +69,7 @@ public class UserController implements IVoyagerDomainController{
 			return null;
 		}	
 		
-		return user;
+		return new DomainUser(user, false);
 	}
 	
 	/**

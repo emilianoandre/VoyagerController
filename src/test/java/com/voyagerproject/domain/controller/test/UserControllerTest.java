@@ -15,7 +15,6 @@ import com.voyagerproject.domain.entities.DomainUser;
 import com.voyagerproject.domain.entities.DomainUserType;
 import com.voyagerproject.domain.exceptions.DomainResultNotFoundException;
 import com.voyagerproject.exceptions.ResultNotFoundException;
-import com.voyagerproject.model.User;
 
 /**
  * @author EAndre
@@ -35,7 +34,7 @@ public class UserControllerTest {
      */
     public void createUserTest()
     {
-    	User user = userController.createUser("TestUserName", "Name", "email", "testPassword", 1, "eandre");
+    	DomainUser user = userController.createUser("TestUserName", "Name", "email", "testPassword", 1);
         assertNotNull(user);
     }
     
@@ -45,9 +44,9 @@ public class UserControllerTest {
     @Test
     public void createDuplicateUserTest()
     {
-    	User user = new User();
+    	DomainUser user = null;
     	try{
-    		user = userController.createUser("TestUserNameNonDelete", "Name", "email", "testPassword", 1, "eandre");
+    		user = userController.createUser("TestUserNameNonDelete", "Name", "email", "testPassword", 1);
     	} catch (Exception ex) {
     		log.debug("createDuplicateUserTest: Exception " + ex.getMessage());
     	}
