@@ -54,8 +54,9 @@ public class UserController implements IVoyagerDomainController{
 	 * @param userTypeId
 	 * @param createdBy
 	 * @return createdUser
+	 * @throws Exception 
 	 */
-	public DomainUser createUser(String userName, String name, String email, String password, int userTypeId) {
+	public DomainUser createUser(String userName, String name, String email, String password, int userTypeId) throws Exception {
 
 		// Create User
 		UserType userType = new UserType();
@@ -66,7 +67,7 @@ public class UserController implements IVoyagerDomainController{
 			user.setIdUser(userId);
 		} catch (Exception ex) {
 			log.error("Failed to create user with userName: " + userName, ex);			
-			return null;
+			throw ex;
 		}	
 		
 		return new DomainUser(user, false);
@@ -140,11 +141,11 @@ public class UserController implements IVoyagerDomainController{
 		try {
 			User user;
 			try {
-				// First we look for the user by the userName
-				user = userDao.findByUserName(updatedUser.getUserName());
+				// First we look for the user by the Id
+				user = userDao.findById(updatedUser.getIdUser());
 			} catch (ResultNotFoundException rnfe) {
 				log.info("No user found with userName: " + updatedUser.getUserName());
-				user = null;
+				throw rnfe;
 			}
 			
 			// Encode the password

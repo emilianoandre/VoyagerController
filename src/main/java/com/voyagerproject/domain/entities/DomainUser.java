@@ -27,22 +27,30 @@ public class DomainUser implements Serializable{
 	public DomainUser() {
 	}
 
-	public DomainUser(int idUser, String userName, String name, String email, String password, String token, DomainUserType userType) {
+	public DomainUser(int idUser, String userName, String name, String email, String password, String token, int idUserType) {
 		this.idUser = idUser;
 		this.userName = userName;
 		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.token = token;
+		
+		DomainUserType userType = new DomainUserType();
+		userType.setIdUserType(idUserType);
+		
 		this.userType = userType;
 	}
 	
-	public DomainUser(String userName, String name, String email, String password, String token, DomainUserType userType) {
+	public DomainUser(String userName, String name, String email, String password, String token, int idUserType) {
 		this.userName = userName;
 		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.token = token;
+		
+		DomainUserType userType = new DomainUserType();
+		userType.setIdUserType(idUserType);
+		
 		this.userType = userType;
 	}
 	

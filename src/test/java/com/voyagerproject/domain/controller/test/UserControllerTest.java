@@ -34,8 +34,13 @@ public class UserControllerTest {
      */
     public void createUserTest()
     {
-    	DomainUser user = userController.createUser("TestUserName", "Name", "email", "testPassword", 1);
-        assertNotNull(user);
+    	DomainUser user;
+		try {
+			user = userController.createUser("TestUserName", "Name", "email", "testPassword", 1);
+			assertNotNull(user);
+		} catch (Exception e) {
+			assertNotNull(null);
+		}        
     }
     
     /**
@@ -60,7 +65,7 @@ public class UserControllerTest {
     public void updateUserTest()
     {
     	try{
-    		DomainUser domainUser = new DomainUser("TestUserNameNonDelete", "Name", "email", "testPassword1", "", new DomainUserType(1, ""));
+    		DomainUser domainUser = new DomainUser("TestUserNameNonDelete", "Name", "email", "testPassword1", "", 1);
     		userController.updateUser(domainUser);
     	} catch (Exception ex) {
     		log.debug("updateUserTest: Exception " + ex.getMessage());
