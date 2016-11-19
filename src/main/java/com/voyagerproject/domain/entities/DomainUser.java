@@ -21,7 +21,7 @@ public class DomainUser implements Serializable{
 	private String name;
 	private String email;
 	private String password;
-	private DomainUserType userType;
+	private DomainType userType;
 	private String token;
 
 	public DomainUser() {
@@ -35,8 +35,8 @@ public class DomainUser implements Serializable{
 		this.password = password;
 		this.token = token;
 		
-		DomainUserType userType = new DomainUserType();
-		userType.setIdUserType(idUserType);
+		DomainType userType = new DomainType();
+		userType.setIdType(idUserType);
 		
 		this.userType = userType;
 	}
@@ -48,8 +48,8 @@ public class DomainUser implements Serializable{
 		this.password = password;
 		this.token = token;
 		
-		DomainUserType userType = new DomainUserType();
-		userType.setIdUserType(idUserType);
+		DomainType userType = new DomainType();
+		userType.setIdType(idUserType);
 		
 		this.userType = userType;
 	}
@@ -70,7 +70,7 @@ public class DomainUser implements Serializable{
 			this.password = user.getPassword();
 		}
 		
-		DomainUserType userType = new DomainUserType(user.getUserType().getIdUserType(), user.getUserType().getName());
+		DomainType userType = new DomainType(user.getUserType().getIdUserType(), user.getUserType().getName());
 		this.userType = userType;
 	}
 	
@@ -147,14 +147,14 @@ public class DomainUser implements Serializable{
 	/**
 	 * @return the userType
 	 */
-	public DomainUserType getUserType() {
+	public DomainType getUserType() {
 		return userType;
 	}
 
 	/**
 	 * @param userType the userType to set
 	 */
-	public void setUserType(DomainUserType userType) {
+	public void setUserType(DomainType userType) {
 		this.userType = userType;
 	}
 	
@@ -191,7 +191,7 @@ public class DomainUser implements Serializable{
 		user.setName(domainUser.getName());
 		user.setPassword(domainUser.getPassword());
 		user.setUserName(domainUser.getUserName());		
-		user.getUserType().setIdUserType(domainUser.getUserType().getIdUserType());
+		user.getUserType().setIdUserType(domainUser.getUserType().getIdType());
 		
 		return user;
 	}

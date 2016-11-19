@@ -12,7 +12,6 @@ import org.junit.Test;
 
 import com.voyagerproject.domain.controller.UserController;
 import com.voyagerproject.domain.entities.DomainUser;
-import com.voyagerproject.domain.entities.DomainUserType;
 import com.voyagerproject.domain.exceptions.DomainResultNotFoundException;
 import com.voyagerproject.exceptions.ResultNotFoundException;
 

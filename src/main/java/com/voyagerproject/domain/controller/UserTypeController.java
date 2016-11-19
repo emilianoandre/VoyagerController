@@ -7,9 +7,10 @@ import org.apache.commons.logging.LogFactory;
 
 import com.voyagerproject.dao.UserTypeDAO;
 import com.voyagerproject.domain.controller.interfaces.IVoyagerDomainController;
-import com.voyagerproject.domain.entities.DomainUserType;
+import com.voyagerproject.domain.entities.DomainType;
 import com.voyagerproject.exceptions.ResultNotFoundException;
 import com.voyagerproject.model.UserType;
+import com.voyagerproject.util.ModelUtils;
 
 /**
  * Controller that handles all the requests for User Type
@@ -21,7 +22,7 @@ public class UserTypeController implements IVoyagerDomainController {
 	// DAOs
 	UserTypeDAO userTypeDao = new UserTypeDAO();
 	
-	private static final Log log = LogFactory.getLog(UserTypeController.class);
+	private static final Log log = LogFactory.getLog(BugSystemTypeController.class);
 	
 	/**
 	 * Gets the complete list of user types
@@ -29,11 +30,12 @@ public class UserTypeController implements IVoyagerDomainController {
 	 * @return UserType collection
 	 * @throws Exception 
 	 */
-	public Collection<DomainUserType> getUserTypes() throws Exception {
-		Collection<DomainUserType> userTypes;
+	public Collection<DomainType> getUserTypes() throws Exception {
+		Collection<DomainType> userTypes;
 		
 		try {
-			userTypes = DomainUserType.getDomainUserTypeList(userTypeDao.getList());
+			// Convert the list to generic type and get the Domain Type List
+			userTypes = DomainType.getDomainTypeList(ModelUtils.getGenericTypeList(userTypeDao.getList()));
 		} catch (Exception ex) {
 			log.error("Failed to fetch user type list");
 			throw ex;
@@ -49,7 +51,7 @@ public class UserTypeController implements IVoyagerDomainController {
 	 * @return createdUserType
 	 * @throws Exception 
 	 */
-	public DomainUserType createUserType(String name) throws Exception {
+	public DomainType createUserType(String name) throws Exception {
 
 		// Create User
 		UserType userType = new UserType();
@@ -63,7 +65,7 @@ public class UserTypeController implements IVoyagerDomainController {
 		}	
 		
 		// Create object to return
-		DomainUserType domainUserType = new DomainUserType(userType);
+		DomainType domainUserType = new DomainType(userType);
 		
 		return domainUserType;
 	}
@@ -94,14 +96,14 @@ public class UserTypeController implements IVoyagerDomainController {
 	 * @return updatedUserType
 	 * @throws Exception 
 	 */
-	public void updateUserType(DomainUserType updatedUserType) throws Exception {
+	public void updateUserType(DomainType updatedUserType) throws Exception {
 		try {
 			UserType userType;
 			try {
 				// First we look for the user type by the userName
-				userType = userTypeDao.findById(updatedUserType.getIdUserType());
+				userType = userTypeDao.findById(updatedUserType.getIdType());
 			} catch (ResultNotFoundException rnfe) {
-				log.info("No user type found with id: " + updatedUserType.getIdUserType());
+				log.info("No user type found with id: " + updatedUserType.getIdType());
 				throw rnfe;
 			}
 			
@@ -109,7 +111,7 @@ public class UserTypeController implements IVoyagerDomainController {
 			userType.setName(updatedUserType.getName());
 			userTypeDao.merge(userType);
 		} catch (Exception ex) {
-			log.error("Failed to update user with id: " + updatedUserType.getIdUserType(), ex);			
+			log.error("Failed to update user with id: " + updatedUserType.getIdType(), ex);			
 			throw ex;
 		}
 	}
