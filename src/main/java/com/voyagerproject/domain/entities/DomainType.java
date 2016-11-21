@@ -21,6 +21,7 @@ public class DomainType {
 
 	public DomainType(int idType, String name) {
 		this.setIdType(idType);
+		this.setName(name);
 	}
 	
 	public DomainType(String name) {

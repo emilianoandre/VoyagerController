@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import com.voyagerproject.model.User;
+import com.voyagerproject.model.UserType;
 
 /**
  * Domain User Class
@@ -190,8 +191,8 @@ public class DomainUser implements Serializable{
 		
 		user.setName(domainUser.getName());
 		user.setPassword(domainUser.getPassword());
-		user.setUserName(domainUser.getUserName());		
-		user.getUserType().setIdUserType(domainUser.getUserType().getIdType());
+		user.setUserName(domainUser.getUserName());
+		user.setUserType(new UserType(domainUser.getUserType().getIdType(), "", null));
 		
 		return user;
 	}
