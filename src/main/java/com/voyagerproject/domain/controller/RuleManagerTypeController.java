@@ -73,7 +73,7 @@ public class RuleManagerTypeController implements IVoyagerDomainController {
 	/**
 	 * Deletes a ruleManager type by it's id
 	 * 
-	 * @param ruleManagerTypeId
+	 * @param ruleManagerTypeId id of the rule manager type to delete
 	 * @throws Exception 
 	 */
 	public void deleteRuleManagerType(Integer ruleManagerTypeId) throws Exception {		

@@ -8,6 +8,7 @@ import org.apache.commons.logging.LogFactory;
 import com.voyagerproject.dao.BugSystemDAO;
 import com.voyagerproject.domain.controller.interfaces.IVoyagerDomainController;
 import com.voyagerproject.domain.entities.DomainBugSystem;
+import com.voyagerproject.domain.entities.DomainType;
 import com.voyagerproject.exceptions.ResultNotFoundException;
 import com.voyagerproject.model.BugSystem;
 import com.voyagerproject.model.BugSystemType;
@@ -45,21 +46,20 @@ public class BugSystemController implements IVoyagerDomainController{
 	/**
 	 * Creates a bugSystem in the system
 	 * 
-	 * @param name
-	 * @param name
-	 * @param email
-	 * @param password
-	 * @param bugSystemTypeId
-	 * @param createdBy
+	 * @param name name of the new bug system
+	 * @param url url of the new bug system
+	 * @param bugSystemTypeId id of the bug system type
 	 * @return createdBugSystem
 	 * @throws Exception 
 	 */
-	public DomainBugSystem createBugSystem(String name, String url, int bugSystemTypeId) throws Exception {
+	public DomainBugSystem createBugSystem(String name, String url, DomainType domainBugSystemType) throws Exception {
 
 		// Create BugSystem
 		BugSystemType bugSystemType = new BugSystemType();
-		bugSystemType.setIdBugSystemType(bugSystemTypeId);
-		BugSystem bugSystem = new BugSystem();
+		bugSystemType.setIdBugSystemType(domainBugSystemType.getIdType());
+		bugSystemType.setName(domainBugSystemType.getName());
+		
+		BugSystem bugSystem = new BugSystem(name, url, bugSystemType, null);		
 		try {
 			Integer bugSystemId = bugSystemDao.persist(bugSystem);
 			bugSystem.setIdBugSystem(bugSystemId);
@@ -74,7 +74,7 @@ public class BugSystemController implements IVoyagerDomainController{
 	/**
 	 * Deletes a bugSystem by it's name
 	 * 
-	 * @param bugSystemId
+	 * @param bugSystemId id of the bug system to delete
 	 * @throws Exception 
 	 */
 	public void deleteBugSystem(Integer bugSystemId) throws Exception {

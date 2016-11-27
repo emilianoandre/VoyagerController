@@ -72,7 +72,7 @@ public class PermissionController implements IVoyagerDomainController {
 	/**
 	 * Deletes a permission by it's id
 	 * 
-	 * @param permissionId
+	 * @param permissionId of the permission to delete
 	 * @throws Exception 
 	 */
 	public void deletePermission(Integer permissionId) throws Exception {		

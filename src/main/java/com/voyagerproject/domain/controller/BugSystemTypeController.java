@@ -73,7 +73,7 @@ public class BugSystemTypeController implements IVoyagerDomainController {
 	/**
 	 * Deletes a bugSystem type by it's id
 	 * 
-	 * @param bugSystemTypeId
+	 * @param bugSystemTypeId if of the bug system type to delete
 	 * @throws Exception 
 	 */
 	public void deleteBugSystemType(Integer bugSystemTypeId) throws Exception {		

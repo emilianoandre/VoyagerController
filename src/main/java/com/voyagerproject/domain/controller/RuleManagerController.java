@@ -8,6 +8,7 @@ import org.apache.commons.logging.LogFactory;
 import com.voyagerproject.dao.RuleManagerDAO;
 import com.voyagerproject.domain.controller.interfaces.IVoyagerDomainController;
 import com.voyagerproject.domain.entities.DomainRuleManager;
+import com.voyagerproject.domain.entities.DomainType;
 import com.voyagerproject.exceptions.ResultNotFoundException;
 import com.voyagerproject.model.RuleManager;
 import com.voyagerproject.model.RuleManagerType;
@@ -45,21 +46,20 @@ public class RuleManagerController implements IVoyagerDomainController{
 	/**
 	 * Creates a ruleManager in the system
 	 * 
-	 * @param name
-	 * @param name
-	 * @param email
-	 * @param password
-	 * @param ruleManagerTypeId
-	 * @param createdBy
+	 * @param name of the new rule manager
+	 * @param url of the new rule manager
+	 * @param ruleManagerTypeId of the new rule manager
 	 * @return createdRuleManager
 	 * @throws Exception 
 	 */
-	public DomainRuleManager createRuleManager(String name, String url, int ruleManagerTypeId) throws Exception {
+	public DomainRuleManager createRuleManager(String name, String url, DomainType domainRuleManagerType) throws Exception {
 
-		// Create RuleManager
+		// Create RuleManager		
 		RuleManagerType ruleManagerType = new RuleManagerType();
-		ruleManagerType.setIdRuleManagerType(ruleManagerTypeId);
-		RuleManager ruleManager = new RuleManager();
+		ruleManagerType.setIdRuleManagerType(domainRuleManagerType.getIdType());
+		ruleManagerType.setName(domainRuleManagerType.getName());
+		
+		RuleManager ruleManager = new RuleManager(name, url, ruleManagerType, null);
 		try {
 			Integer ruleManagerId = ruleManagerDao.persist(ruleManager);
 			ruleManager.setIdRuleManager(ruleManagerId);
@@ -74,7 +74,7 @@ public class RuleManagerController implements IVoyagerDomainController{
 	/**
 	 * Deletes a ruleManager by it's name
 	 * 
-	 * @param ruleManagerId
+	 * @param ruleManagerId of the rule manager to delete
 	 * @throws Exception 
 	 */
 	public void deleteRuleManager(Integer ruleManagerId) throws Exception {

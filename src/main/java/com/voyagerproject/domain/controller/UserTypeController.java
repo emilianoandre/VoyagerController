@@ -73,7 +73,7 @@ public class UserTypeController implements IVoyagerDomainController {
 	/**
 	 * Deletes a user type by it's id
 	 * 
-	 * @param userTypeId
+	 * @param userTypeId id of the user type to delete
 	 * @throws Exception 
 	 */
 	public void deleteUserType(Integer userTypeId) throws Exception {		

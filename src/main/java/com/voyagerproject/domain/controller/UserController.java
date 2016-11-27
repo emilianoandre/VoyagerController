@@ -7,6 +7,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.voyagerproject.dao.UserDAO;
 import com.voyagerproject.domain.controller.interfaces.IVoyagerDomainController;
+import com.voyagerproject.domain.entities.DomainType;
 import com.voyagerproject.domain.entities.DomainUser;
 import com.voyagerproject.domain.exceptions.DomainResultNotFoundException;
 import com.voyagerproject.exceptions.ResultNotFoundException;
@@ -47,20 +48,21 @@ public class UserController implements IVoyagerDomainController{
 	/**
 	 * Creates a user in the system
 	 * 
-	 * @param userName
-	 * @param name
-	 * @param email
-	 * @param password
-	 * @param userTypeId
-	 * @param createdBy
+	 * @param userName of the new user
+	 * @param name of the new user
+	 * @param email of the new user
+	 * @param password of the new user
+	 * @param userTypeId of the new user
 	 * @return createdUser
 	 * @throws Exception 
 	 */
-	public DomainUser createUser(String userName, String name, String email, String password, int userTypeId) throws Exception {
+	public DomainUser createUser(String userName, String name, String email, String password, DomainType domainUserType) throws Exception {
 
 		// Create User
 		UserType userType = new UserType();
-		userType.setIdUserType(userTypeId);
+		userType.setIdUserType(domainUserType.getIdType());
+		userType.setName(domainUserType.getName());
+		
 		User user = new User(userName, name, email, DomainUtil.calculateHash(password), userType, null);
 		try {
 			Integer userId = userDao.persist(user);
@@ -76,7 +78,7 @@ public class UserController implements IVoyagerDomainController{
 	/**
 	 * Deletes a user by it's userName
 	 * 
-	 * @param userName
+	 * @param userName of the user to delete
 	 * @throws Exception 
 	 */
 	public void deleteUser(String userName) throws Exception {
