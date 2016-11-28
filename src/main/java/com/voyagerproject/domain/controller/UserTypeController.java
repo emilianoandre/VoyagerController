@@ -84,7 +84,7 @@ public class UserTypeController implements IVoyagerDomainController {
 			log.info("No user type found with id: " + userTypeId);
 			throw rnfe;
 		} catch (Exception ex) {
-			log.error("Failed to delete user type with ID: " + userTypeId, ex);			
+			log.error("Failed to delete user type with id: " + userTypeId, ex);			
 			throw ex;
 		}
 	}

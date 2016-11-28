@@ -78,14 +78,18 @@ public class UserController implements IVoyagerDomainController{
 	/**
 	 * Deletes a user by it's userName
 	 * 
-	 * @param userName of the user to delete
+	 * @param userId of the user to delete
 	 * @throws Exception 
 	 */
-	public void deleteUser(String userName) throws Exception {
+	public void deleteUser(Integer userId) throws Exception {
 		try {
-			userDao.deleteByUserName(userName);
+			User user = userDao.findById(userId);
+			userDao.remove(user);
+		} catch (ResultNotFoundException rnfe) {
+			log.info("No user found with id: " + userId);
+			throw rnfe;
 		} catch (Exception ex) {
-			log.error("Failed to delete user with userName: " + userName, ex);			
+			log.error("Failed to delete user with id: " + userId, ex);			
 			throw ex;
 		}
 	}

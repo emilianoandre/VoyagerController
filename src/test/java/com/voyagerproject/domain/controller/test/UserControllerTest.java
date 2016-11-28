@@ -11,6 +11,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import com.voyagerproject.domain.controller.UserController;
+import com.voyagerproject.domain.entities.DomainType;
 import com.voyagerproject.domain.entities.DomainUser;
 import com.voyagerproject.domain.exceptions.DomainResultNotFoundException;
 import com.voyagerproject.exceptions.ResultNotFoundException;
@@ -35,7 +36,7 @@ public class UserControllerTest {
     {
     	DomainUser user;
 		try {
-			user = userController.createUser("TestUserName", "Name", "email", "testPassword", 1);
+			user = userController.createUser("TestUserName", "Name", "email", "testPassword", new DomainType(1, "test"));
 			assertNotNull(user);
 		} catch (Exception e) {
 			assertNotNull(null);
@@ -50,7 +51,7 @@ public class UserControllerTest {
     {
     	DomainUser user = null;
     	try{
-    		user = userController.createUser("TestUserNameNonDelete", "Name", "email", "testPassword", 1);
+    		user = userController.createUser("TestUserNameNonDelete", "Name", "email", "testPassword", new DomainType(1, "test"));
     	} catch (Exception ex) {
     		log.debug("createDuplicateUserTest: Exception " + ex.getMessage());
     	}
@@ -81,7 +82,7 @@ public class UserControllerTest {
     public void deleteUserTest()
     {
     	try {
-    		userController.deleteUser("TestUserName");
+    		userController.deleteUser(3);
     	} catch (Exception ex) {
     	  fail(ex.getMessage());
     	}
@@ -95,7 +96,7 @@ public class UserControllerTest {
     @Test(expected = ResultNotFoundException.class)
     public void deleteUserWrongUserNameTest() throws Exception
     {
-    	userController.deleteUser("TestUserName2");
+    	userController.deleteUser(3);
     }
     
     /**

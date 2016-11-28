@@ -11,9 +11,11 @@ import com.voyagerproject.domain.entities.DomainBugSystem;
 import com.voyagerproject.domain.entities.DomainProject;
 import com.voyagerproject.domain.entities.DomainRuleManager;
 import com.voyagerproject.exceptions.ResultNotFoundException;
+import com.voyagerproject.model.BugSystem;
+import com.voyagerproject.model.BugSystemType;
 import com.voyagerproject.model.Project;
 import com.voyagerproject.model.RuleManager;
-import com.voyagerproject.model.BugSystem;
+import com.voyagerproject.model.RuleManagerType;
 
 /**
  * @author EAndre
@@ -54,14 +56,23 @@ public class ProjectController implements IVoyagerDomainController{
 	 * @return createdProject
 	 * @throws Exception 
 	 */
-	public DomainProject createProject(String name, DomainRuleManager ruleManager, DomainBugSystem bugSystem) throws Exception {
+	public DomainProject createProject(String name, DomainRuleManager domainRuleManager, DomainBugSystem domainBugSystem) throws Exception {
 
-		// Create Project
-		Project project = new Project();
+		// Create Project		
+		RuleManager ruleManager = new RuleManager();
+		ruleManager.setIdRuleManager(domainRuleManager.getIdRuleManager());
+		ruleManager.setName(domainRuleManager.getName());
+		ruleManager.setRuleManagerType(new RuleManagerType(domainRuleManager.getRuleManagerType().getIdType(), 
+				domainRuleManager.getRuleManagerType().getName(), null));
 		
-		project.setName(name);
-		project.setBugSystem(DomainBugSystem.createBugSystemFromDomainBugSystem(bugSystem, new BugSystem()));
-		project.setRuleManager(DomainRuleManager.createRuleManagerFromDomainRuleManager(ruleManager, new RuleManager()));
+		BugSystem bugSystem = new BugSystem();
+		bugSystem.setIdBugSystem(domainBugSystem.getIdBugSystem());
+		bugSystem.setName(domainBugSystem.getName());
+		bugSystem.setBugSystemType(new BugSystemType(domainBugSystem.getBugSystemType().getIdType(), 
+				domainBugSystem.getBugSystemType().getName(), null));
+		
+		Project project = new Project(name, bugSystem, ruleManager, null);
+		
 		try {
 			Integer projectId = projectDao.persist(project);
 			project.setIdProject(projectId);

@@ -6,6 +6,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.voyagerproject.model.BugSystem;
 import com.voyagerproject.model.Project;
 import com.voyagerproject.model.RuleManager;
@@ -13,6 +14,7 @@ import com.voyagerproject.model.RuleManager;
 /**
  * Domain Project Class
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DomainProject implements java.io.Serializable {
 
 	private static final long serialVersionUID = -3196981065072616409L;

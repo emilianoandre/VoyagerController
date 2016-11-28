@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.voyagerproject.model.BugSystem;
 import com.voyagerproject.model.BugSystemType;
 
 /**
  * BugSystem Domain entity
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DomainBugSystem implements java.io.Serializable {
 
 	private static final long serialVersionUID = -6787730676406890862L;

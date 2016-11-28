@@ -3,6 +3,7 @@ package com.voyagerproject.domain.entities;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.voyagerproject.model.Permission;
 
 /**
@@ -11,6 +12,7 @@ import com.voyagerproject.model.Permission;
  * @author EAndre
  *
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DomainPermission {
 	
 	private int idPermission;

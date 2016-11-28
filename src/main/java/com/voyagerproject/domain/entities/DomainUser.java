@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.voyagerproject.model.User;
 import com.voyagerproject.model.UserType;
 
@@ -13,6 +14,7 @@ import com.voyagerproject.model.UserType;
  * @author EAndre
  *
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DomainUser implements Serializable{
 
 	private static final long serialVersionUID = -4935082656288280812L;
