@@ -118,19 +118,17 @@ public class UserController implements IVoyagerDomainController{
 	/**
 	 * Logs out the user from the system
 	 * 
-	 * @param userName
-	 * @param password
+	 * @param token the token of the logged in user
 	 * @return DomainUser logged out user 
 	 */
-	public DomainUser logOut(String userName, String password) throws DomainResultNotFoundException{
-		// Calculate password hash
-		String hashedPassword = DomainUtil.calculateHash(password);
+	public DomainUser logOut(String token) throws DomainResultNotFoundException{
+		
 		DomainUser loggedUser = null;
 		try {
 			// Log in user
-			loggedUser = new DomainUser(userDao.logOut(userName, hashedPassword), false);
+			loggedUser = new DomainUser(userDao.logOut(token), false);
 		} catch (Exception ex) {
-			log.error("Failed to log out user: " + userName, ex);
+			log.error("Failed to log out user with token: " + token, ex);
 			throw new DomainResultNotFoundException(ex.getMessage());
 		}
 		return loggedUser;
